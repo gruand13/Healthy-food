@@ -151,7 +151,7 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                     closeModal();
                 }
             });
-            const modalTimerId = setTimeout(openModal, 2000);
+            // const modalTimerId = setTimeout(openModal, 2000);
 
             function showModalByScroll(){
                 if (window.pageYOffset+  document.documentElement.clientHeight>= document.documentElement.scrollHeight-1 ){
@@ -231,7 +231,50 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
         'menu__item'
 
         ).render();
+// forms
+        const forms = document.querySelectorAll('form');
+        const message ={
+            loading: 'Загрузка',
+            success: 'Спасибо! мы с вами свяжемся',
+            failure: 'Что-то пошло не так...'
+        };
+        
+        forms.forEach(item=>{
+            postData(item);
+        });
 
+        function postData(form) {
+            form.addEventListener('submit', (e)=>{
+                e.preventDefault();
+
+                const statusMessage= document.createElement('div');
+                statusMessage.classList.add('status');
+                statusMessage.textContent = message.loading;
+                form.append(statusMessage);
+
+                const request = new XMLHttpRequest();
+                request.open('POST', 'server.php');
+
+                // request.setRequestHeader('Content-type', 'multipart/form-data'); не надо устанавливается автоматически 
+
+                const formData = new FormData(form);
+                request.send(formData);
+                request.addEventListener('load', ()=>{
+                    if (request.status === 200){
+                        console.log(request.response);
+                        statusMessage.textContent = message.success;
+                        form.reset(); //сбрасываем форму
+                        setTimeout(()=> {
+                            statusMessage.remove();
+                        }, 2000); // удаляем надпись через 2 сек
+                    } else {
+                        statusMessage.textContent = message.failure;
+                    }
+                });
+
+
+            });
+        }
 
 });
 
