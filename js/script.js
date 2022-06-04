@@ -255,10 +255,16 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                 const request = new XMLHttpRequest();
                 request.open('POST', 'server.php');
 
-                // request.setRequestHeader('Content-type', 'multipart/form-data'); не надо устанавливается автоматически 
+                request.setRequestHeader('Content-type', 'aplication/json'); // если данные в формате json нужны на сервере
 
                 const formData = new FormData(form);
-                request.send(formData);
+                const object = {};
+                formData.forEach (function (value, key){
+                    object[key]= value;
+                }); // перебираем formData в обычный обьект 
+
+                const json =JSON.stringify(object);
+                request.send(json);
                 request.addEventListener('load', ()=>{
                     if (request.status === 200){
                         console.log(request.response);
