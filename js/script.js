@@ -267,7 +267,7 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                 }); // перебираем formData в обычный обьект 
 
 
-                fetch ('server1.php', {
+                fetch ('server.php', {
                     method: "POST",
                     headers: {
                         'Content-type': 'aplication/json'
