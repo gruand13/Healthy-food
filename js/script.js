@@ -256,10 +256,9 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                
                 form.insertAdjacentElement('afterend', statusMessage);
 
-                const request = new XMLHttpRequest();
-                request.open('POST', 'server.php');
+                
 
-                request.setRequestHeader('Content-type', 'aplication/json'); // если данные в формате json нужны на сервере
+                
 
                 const formData = new FormData(form);
                 const object = {};
@@ -267,19 +266,28 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                     object[key]= value;
                 }); // перебираем formData в обычный обьект 
 
-                const json =JSON.stringify(object);
-                request.send(json);
-                request.addEventListener('load', ()=>{
-                    if (request.status === 200){
-                        console.log(request.response);
-                        showThanksModal(message.success);
-                        form.reset(); //сбрасываем форму
-                        statusMessage.remove();
-                        // удаляем надпись через 2 сек
-                    } else {
-                        showThanksModal(message.failure);
-                    }
-                });
+
+                fetch ('server1.php', {
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'aplication/json'
+                    },
+                    body : JSON.stringify(object)
+                })
+                .then(data=>data.text())
+                .then(data=>{
+                    console.log(data);
+                    showThanksModal(message.success);
+                    
+                    statusMessage.remove();
+                })
+                .catch(()=>{
+                    showThanksModal(message.failure);
+                })
+                .finally(()=>{
+                    form.reset(); //сбрасываем форму
+                })
+                
 
 
             });
@@ -310,6 +318,7 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
             }, 4000);
 
         }
+
 });
 
 
