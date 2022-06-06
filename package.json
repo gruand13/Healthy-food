@@ -1,0 +1,22 @@
+{
+  "name": "food",
+  "version": "1.0.0",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gruand13/Healthy-food.git"
+  },
+  "author": "Andrey Hrusheuski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gruand13/Healthy-food/issues"
+  },
+  "homepage": "https://github.com/gruand13/Healthy-food#readme",
+  "description": "",
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  }
+}
