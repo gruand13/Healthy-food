@@ -201,42 +201,52 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
             this.parent.append(element);
          }
         }
-
+          // получение данных с сервера  (делаем запрос дожидаемся окончания и трансформируем в json)
         const getResource = async (url) => {
             const res = await fetch(url);
-
+          // проверяем запрос что все хорошо прошло
             if (!res.ok){
                throw new Error(`Could not fetch ${url}, status: ${res.status}`) ;
             }
                 
             return await res.json();
         };
+        // получаем запрос с сервера и обрабатываем его (перебираем для каждого элемента массива и вызывааем конструктор)
         // getResource('http://localhost:3000/menu')
         // .then(data=> {
         //     data.forEach(({img, altimg, title, descr, price}) => {
         //         new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
         //     });
         // });
-        getResource('http://localhost:3000/menu')
-       .then(data=> createCard(data));
 
-        function createCard(data){
-            data.forEach(({img, altimg, title, descr, price})=>{
-                    const element = document.createElement('div');
-                    element.classList.add('menu__item');
-                    element.innerHTML = `
-                    <img src=${img} alt=${altimg}>
-                    <h3 class="menu__item-subtitle">${title}</h3>
-                    <div class="menu__item-descr">${descr}</div>
-                    <div class="menu__item-divider"></div>
-                    <div class="menu__item-price">
-                        <div class="menu__item-cost">Цена:</div>
-                        <div class="menu__item-total"><span>${price}</span> грн/день</div>
-                    </div>
-                    `;
-                    document.querySelector('.menu .container').append(element);
+// 2 вариант создания определенных элементов динамически на странице ( без классов "на лету" )
+    //     getResource('http://localhost:3000/menu')
+    //    .then(data=> createCard(data));
+
+            axios.get('http://localhost:3000/menu')
+            .then(data=>{
+            data.data.forEach(({img, altimg, title, descr, price}) => {
+             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
-        }
+            });
+// 2 вариант создания определенных элементов динамически на странице без шаблонизации( без классов "на лету" )
+        // function createCard(data){
+        //     data.forEach(({img, altimg, title, descr, price})=>{
+        //             const element = document.createElement('div');
+        //             element.classList.add('menu__item');
+        //             element.innerHTML = `
+        //             <img src=${img} alt=${altimg}>
+        //             <h3 class="menu__item-subtitle">${title}</h3>
+        //             <div class="menu__item-descr">${descr}</div>
+        //             <div class="menu__item-divider"></div>
+        //             <div class="menu__item-price">
+        //                 <div class="menu__item-cost">Цена:</div>
+        //                 <div class="menu__item-total"><span>${price}</span> грн/день</div>
+        //             </div>
+        //             `;
+        //             document.querySelector('.menu .container').append(element);
+        //     });
+        // }
 
 // forms
         const forms = document.querySelectorAll('form');
@@ -246,10 +256,11 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
             failure: 'Что-то пошло не так...'
         };
         
+        // запрос на сервер
         forms.forEach(item=>{
             bindPostData(item);
         });
-
+// получим промис и вернем в формате json
         const postData = async (url, data) => {
             const res = await fetch(url,{
                 method: "POST",
@@ -277,11 +288,10 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                 
 
                 
-
+                //собираем все данные из формы 
                 const formData = new FormData(form);
+                // !!!!!! преобразуем formdata в json
                 const json = JSON.stringify(Object.fromEntries(formData.entries()));
-
-
                 
                 postData('http://localhost:3000/requests', json)
                 .then(data=>{
@@ -297,8 +307,6 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                     form.reset(); //сбрасываем форму
                 });
                 
-
-
             });
         }
 
@@ -327,9 +335,7 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
             }, 4000);
 
         }
-        // fetch('http://localhost:3000/menu')
-        // .then(data=>data.json())
-        // .then(res=> console.log(res));
+        
 
 });
 
