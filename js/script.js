@@ -377,7 +377,7 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
             next.addEventListener('click', ()=>{
                 plusSlides(1);
             });
-
+                // hello notebook parent
 });
 
 
