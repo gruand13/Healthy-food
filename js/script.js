@@ -411,7 +411,20 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                 dots.push(dot);
             }
 
+           
+            function showSlideIndex (){
+                if (slides.length<10){
+                    current.textContent = `0${slideIndex}`;
+                } else {
+                    current.textContext = slideIndex;
+                }
+            };
+            
+            function activatedDot () {
+                dots.forEach(dot => dot.style.opacity = '.5');
+                dots[slideIndex-1].style.opacity = 1;
 
+            };
             next.addEventListener('click', ()=>{
                 if (offset == +width.slice(0, width.length-2) * (slides.length-1)){
                     offset=0;
@@ -420,18 +433,17 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                 }
                 slidesField.style.transform = `translateX(-${offset}px)`;
 
+                
                 if (slideIndex == slides.length){
                     slideIndex = 1;
                 } else {
                     slideIndex++;
                 }
-                if (slides.length<10){
-                    current.textContent = `0${slideIndex}`;
-                } else {
-                    current.textContext = slideIndex;
-                }
-                dots.forEach(dot => dot.style.opacity = '.5');
-                dots[slideIndex-1].style.opacity = 1;
+
+                showSlideIndex();
+                
+                activatedDot();
+              
             });
             
 
@@ -444,18 +456,18 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
                 }
                 slidesField.style.transform = `translateX(-${offset}px)`;
 
+                
                 if (slideIndex == 1){
                     slideIndex = slides.length;
                 } else {
                     slideIndex--;
                 }
-                if (slides.length<10){
-                    current.textContent = `0${slideIndex}`;
-                } else {
-                    current.textContext = slideIndex;
-                }
-                dots.forEach(dot => dot.style.opacity = '.5');
-                dots[slideIndex-1].style.opacity = 1;
+
+                showSlideIndex();
+                
+                
+                activatedDot();
+             
             });
 
             dots.forEach(dot=>{
@@ -467,16 +479,10 @@ const   modalTrigger= document.querySelectorAll('[data-modal]'),
 
                     slidesField.style.transform = `translateX(-${offset}px)`;
 
-
-                    if (slides.length<10){
-                        current.textContent = `0${slideIndex}`;
-                    } else {
-                        current.textContext = slideIndex;
-                    }
+                    showSlideIndex();
                     
-                    dots.forEach(dot => dot.style.opacity = '.5');
-                    dots[slideIndex-1].style.opacity = 1;
-
+                    activatedDot();
+                    
                     
                 });
             });
