@@ -1,3 +1,5 @@
+import {getResource} from '../services/services';
+
 function cards (){
     // Используем классы для карточек
 
@@ -38,16 +40,7 @@ function cards (){
            this.parent.append(element);
         }
        }
-         // получение данных с сервера  (делаем запрос дожидаемся окончания и трансформируем в json)
-       const getResource = async (url) => {
-           const res = await fetch(url);
-         // проверяем запрос что все хорошо прошло
-           if (!res.ok){
-              throw new Error(`Could not fetch ${url}, status: ${res.status}`) ;
-           }
-               
-           return await res.json();
-       };
+
        // получаем запрос с сервера и обрабатываем его (перебираем для каждого элемента массива и вызывааем конструктор)
        // getResource('http://localhost:3000/menu')
        // .then(data=> {
@@ -87,4 +80,4 @@ function cards (){
 
 }
 
-module.exports =cards;
+export default cards;

@@ -1,6 +1,6 @@
-function timer(){
+function timer(id, deadline){
 //  TIMER !!!!
-const deadline ='2022-07-13';
+
 
 function getTimeRemainig(endtime){
     // превращаем разницу в милисекунды
@@ -45,7 +45,7 @@ function setClock (selector, endtime){
             updateClock();
 
             function updateClock(){
-                t=getTimeRemainig(endtime);
+                 const t=getTimeRemainig(endtime);
                 days.innerHTML=getZero(t.days);
                 hours.innerHTML=getZero(t.hours);
                 minutes.innerHTML=getZero(t.minutes);
@@ -71,7 +71,7 @@ function setClock (selector, endtime){
            
 }
 
-setClock('.timer', deadline);
+setClock(id, deadline);
 }
 
-module.exports = timer;
+export default timer;
