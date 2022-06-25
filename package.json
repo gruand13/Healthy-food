@@ -11,14 +11,27 @@
   },
   "author": "Andrey Hrusheuski",
   "license": "ISC",
+  "browserslist": [
+    "> 1%"
+  ],
   "bugs": {
     "url": "https://github.com/gruand13/Healthy-food/issues"
   },
   "homepage": "https://github.com/gruand13/Healthy-food#readme",
   "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "babel-loader": "^8.2.5",
+    "core-js": "^3.23.2",
     "json-server": "^0.17.0",
     "webpack-cli": "^4.10.0"
   },
   "keywords": [],
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "es6-promise": "^4.2.8",
+    "nodelist-foreach-polyfill": "^1.2.0"
+  }
 }
